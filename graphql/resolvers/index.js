@@ -1,3 +1,5 @@
+//this file combines the logic of each resolver
+
 const postsResolvers = require("./posts");
 const userResolvers = require("./users");
 const commentsResolvers = require("./comments");

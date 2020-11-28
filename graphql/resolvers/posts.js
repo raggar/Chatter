@@ -1,5 +1,4 @@
 const { AuthenticationError, UserInputError } = require("apollo-server");
-const { argsToArgsConfig } = require("graphql/type/definition");
 
 const Post = require("../../models/Post");
 const checkAuth = require("../../util/checkAuth");
@@ -54,6 +53,7 @@ module.exports = {
 		},
 		async deletePost(_, { postId }, context) {
 			const user = checkAuth(context);
+
 			try {
 				const post = await Post.findById(postId);
 				if (user.username === post.username) {
@@ -67,14 +67,14 @@ module.exports = {
 			}
 		},
 		async likePost(_, { postId }, context) {
-			const { user } = checkAuth(context);
+			const { username } = checkAuth(context);
 
 			const post = await Post.findById(postId);
 
 			if (post) {
-				// find posts that we liked
+				// if we liked the post
 				if (post.likes.find((like) => like.username === username)) {
-					//post already liked, unlike it
+					//remove current user's name from array of people who liked the post
 					post.likes = post.likes.filter((like) => like.username != username);
 				} else {
 					//Not liked, like post

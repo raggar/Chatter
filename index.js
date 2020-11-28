@@ -1,21 +1,21 @@
 const { ApolloServer, PubSub } = require("apollo-server");
 const mongoose = require("mongoose");
 
+const resolvers = require("./graphql/resolvers"); //contain logic for each query/mutation (don't need to specify /index at the end since its default file)
 const { MONGODB } = require("./config");
-const typeDefs = require("./graphql/typeDefs");
+const typeDefs = require("./graphql/typeDefs"); //where each query/mutation is defined
 
-//uses websockets to listen for new posts made
-const pubsub = new PubSub();
+const pubsub = new PubSub(); //uses websockets to listen for new posts made
 
-//dont need to specify index since thats default file in a folder
-const resolvers = require("./graphql/resolvers"); //contain logic for each query/mutation
-
+//instance of Apollo Server
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
+	// passed to every resolver that executes for a particular operation and enables resolvers to share helpful context
 	context: ({ req }) => ({ req, pubsub }), //take request body and forward to context
 });
 
+//connect to mongodb (once done run server)
 mongoose
 	.connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
@@ -24,4 +24,7 @@ mongoose
 	})
 	.then((res) => {
 		console.log(`Server is running at ${res.url}`);
+	})
+	.catch((err) => {
+		console.log(err);
 	});

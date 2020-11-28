@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { UserInputError } = require("apollo-server"); //apollo specific error handler
+const { UserInputError } = require("apollo-server");
 
 const User = require("../../models/User");
 const { SECRET_KEY } = require("../../config");
@@ -27,22 +27,26 @@ module.exports = {
 			const { errors, valid } = validateLoginInput(username, password);
 
 			if (!valid) {
-				throw new UserInputError("Errors", { errors });
+				throw new UserInputError("Login Errors", { errors });
 			}
 
 			const user = await User.findOne({ username });
+
+			//if no user exists in database with specified username
 			if (!user) {
 				errors.general = "User not found";
-				throw new UserInputError(errors.general, { errors });
+				throw new UserInputError("User not found", { errors });
 			}
 
 			const match = await bcrypt.compare(password, user.password);
 			if (!match) {
 				errors.general = "Wrong credentials";
-				throw new UserInputError(errors.general, { errors });
+				throw new UserInputError("Wrong credentials", { errors });
 			}
-
+			//if everything was valid then generate a token
 			const token = generateToken(user);
+			console.log("User logged in information", user._doc);
+
 			return {
 				...user._doc,
 				id: user._id,

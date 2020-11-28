@@ -1,5 +1,8 @@
+import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Container } from "semantic-ui-react";
 
+//import semantic-ui mini css file
 import "semantic-ui-css/semantic.min.css";
 import "./App.css"; //will override default styles from semantic css (since it's after)
 
@@ -10,7 +13,6 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import MenuBar from "./components/MenuBar";
-import { Container } from "semantic-ui-react";
 import SinglePost from "./pages/SinglePost";
 
 function App() {

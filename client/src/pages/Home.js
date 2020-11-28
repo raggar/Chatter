@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/client";
-import gql from "graphql-tag";
 import { Grid, Transition } from "semantic-ui-react";
 
-import PostCard from "../components/PostCard";
 import { AuthContext } from "../context/auth";
+import PostCard from "../components/PostCard";
 import PostForm from "../components/PostForm";
 import { FETCH_POSTS_QUERY } from "../util/graphql";
 
 export default function Home() {
-	const { loading, data } = useQuery(FETCH_POSTS_QUERY);
 	const { user } = useContext(AuthContext);
-
+	//when using queries, query name is added on data property
+	const { loading, data } = useQuery(FETCH_POSTS_QUERY);
+	console.log(data);
 	return (
 		<Grid columns={3} divided>
 			<Grid.Row className="page-title">

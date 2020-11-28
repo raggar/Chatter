@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "node index",
-    "start": "nodemon index"
+    "temp": "node index",
+    "dev": "nodemon index",
+    "gitty": "node g.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,7 @@
   "dependencies": {
     "apollo-server": "^2.19.0",
     "bcryptjs": "^2.4.3",
+    "child_process": "^1.0.2",
     "graphql": "^15.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.15",

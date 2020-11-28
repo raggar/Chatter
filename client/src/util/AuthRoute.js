@@ -3,7 +3,10 @@ import { Route, Redirect } from "react-router-dom";
 
 import { AuthContext } from "../context/auth";
 
+//component property is "renamed" Component
 function AuthRoute({ component: Component, ...rest }) {
+	//...rest is the Route props
+	//...props is Route component props
 	const { user } = useContext(AuthContext);
 
 	return (

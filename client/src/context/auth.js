@@ -15,6 +15,7 @@ if (localStorage.getItem("jwtToken")) {
 	}
 }
 
+//will pass this context object to useContext to recieve new updated context
 const AuthContext = createContext({
 	user: null,
 	login: (userData) => {},
