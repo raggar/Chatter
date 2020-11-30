@@ -9,6 +9,7 @@ import MyPopup from "../util/MyPopup";
 function LikeButton({ user, post: { id, likeCount, likes } }) {
 	const [liked, setLiked] = useState(false);
 	useEffect(() => {
+		// if user exists and they liked a post
 		if (user && likes.find((like) => like.username === user.username)) {
 			setLiked(true);
 		} else {
@@ -17,6 +18,7 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
 	}, [user, likes]);
 
 	const [likePost] = useMutation(LIKE_POST_MUTATION, {
+		//when button is clicked pass the post id
 		variables: { postId: id },
 	});
 
@@ -39,9 +41,6 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
 	return (
 		<Button as="div" labelPosition="right" onClick={likePost}>
 			<MyPopup content={liked ? "Unlike" : "Like"}>{likeButton}</MyPopup>
-			<Button color="teal" basic>
-				<Icon name="heart" />
-			</Button>
 			<Label basic color="teal" pointing="left">
 				{likeCount}
 			</Label>

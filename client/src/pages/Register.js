@@ -7,7 +7,7 @@ import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
 
 export default function Register(props) {
-	const context = useContext(AuthContext);
+	const user = useContext(AuthContext);
 	const [errors, setErrors] = useState({});
 
 	const { onChange, onSubmit, values } = useForm(registerUser, {
@@ -18,17 +18,15 @@ export default function Register(props) {
 	});
 
 	const [addUser, { loading }] = useMutation(REGISTER_USER, {
-		// if mutation is successfully executed
+		//if addUser is called and mutation is sucessful
 		update(_, { data: { register: userData } }) {
-			context.login(userData);
+			user.login(userData);
 			props.history.push("/");
 		},
-		variables: values,
-		//if there is an error
 		onError(err) {
-			console.log(err.graphQLErrors[0].extensions.exception);
 			setErrors(err.graphQLErrors[0].extensions.exception.errors);
 		},
+		variables: values,
 	});
 
 	//created since functions are recognized everywhere as opposed to constants
@@ -38,8 +36,11 @@ export default function Register(props) {
 
 	return (
 		<div className="form-container">
+			{/* Register Form */}
 			<Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
 				<h1>Register</h1>
+
+				{/* Username*/}
 				<Form.Input
 					label="Username"
 					placeholder="Username..."
@@ -49,6 +50,7 @@ export default function Register(props) {
 					onChange={onChange}
 					error={errors.username ? true : false}
 				/>
+				{/* Email */}
 				<Form.Input
 					label="Email"
 					placeholder="Email..."
@@ -58,6 +60,7 @@ export default function Register(props) {
 					onChange={onChange}
 					error={errors.email ? true : false}
 				/>
+				{/* Password */}
 				<Form.Input
 					label="Password"
 					placeholder="Password..."
@@ -67,6 +70,7 @@ export default function Register(props) {
 					onChange={onChange}
 					error={errors.password ? true : false}
 				/>
+				{/* Confirm Password */}
 				<Form.Input
 					label="Confirm Password"
 					placeholder="ConfirmPassword"
@@ -80,6 +84,7 @@ export default function Register(props) {
 					Register
 				</Button>
 			</Form>
+			{/* If there are any errors */}
 			{Object.keys(errors).length > 0 && (
 				<div className="ui error message">
 					<ul className="list">

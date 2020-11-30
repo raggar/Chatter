@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button } from "semantic-ui-react";
+import { Form } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 
@@ -42,7 +42,7 @@ export default function PostForm() {
 					></Form.Input>
 				</Form.Field>
 			</Form>
-			{error && (
+			{error?.graphQLErrors && (
 				<div className="ui error message" style={{ marginBottom: 20 }}>
 					<ul className="list">
 						<li>{error.graphQLErrors[0].message}</li>

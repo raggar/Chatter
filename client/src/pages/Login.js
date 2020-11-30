@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button } from "semantic-ui-react";
-import { useMutation, useContext } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 
 import { useForm } from "../util/hooks";
@@ -15,14 +15,16 @@ export default function Login(props) {
 		password: "",
 	});
 
+	//loginUser is a function that can be used to execute the mutation
+
 	const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-		// if mutation is successfully executed
+		// when loginUser is called and if mutation is successfully executed
 		update(_, { data: { login: userData } }) {
 			context.login(userData);
 			props.history.push("/");
 		},
 		variables: values,
-		//if there is an error
+		//if there is an error with the mutation we will popular the errors state
 		onError(err) {
 			console.log(err.graphQLErrors[0].extensions.exception);
 			setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -35,8 +37,10 @@ export default function Login(props) {
 
 	return (
 		<div className="form-container">
+			{/* Login Form Body */}
 			<Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
 				<h1>Login</h1>
+				{/* Username */}
 				<Form.Input
 					label="Username"
 					placeholder="Username..."
@@ -46,6 +50,7 @@ export default function Login(props) {
 					onChange={onChange}
 					error={errors.username ? true : false}
 				/>
+				{/* Password */}
 				<Form.Input
 					label="Password"
 					placeholder="Password..."
@@ -55,10 +60,12 @@ export default function Login(props) {
 					onChange={onChange}
 					error={errors.password ? true : false}
 				/>
+				{/* Submit Button */}
 				<Button type="submit" primary>
 					Login
 				</Button>
 			</Form>
+			{/* Any Error Messages */}
 			{Object.keys(errors).length > 0 && (
 				<div className="ui error message">
 					<ul className="list">
@@ -73,6 +80,7 @@ export default function Login(props) {
 }
 
 const LOGIN_USER = gql`
+	# first line defines "login" schema
 	mutation login($username: String!, $password: String!) {
 		login(username: $username, password: $password) {
 			id

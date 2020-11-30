@@ -16,12 +16,15 @@ if (localStorage.getItem("jwtToken")) {
 }
 
 //will pass this context object to useContext to recieve new updated context
+//parameter of createContext is the default value
 const AuthContext = createContext({
 	user: null,
-	login: (userData) => {},
+	login: (userData) => {}, //login and logout are initialized to do nothing
 	logout: () => {},
 });
 
+//reducer strictly defines actions
+//state initialized to "initialState"
 function authReducer(state, action) {
 	switch (action.type) {
 		case "LOGIN":
@@ -41,8 +44,10 @@ function authReducer(state, action) {
 }
 
 function AuthProvider(props) {
+	//useReducer hooks gives us access to current state object and dispatch function
 	const [state, dispatch] = useReducer(authReducer, initialState);
 
+	//defining login and logout functions on user given back from context
 	function login(userData) {
 		localStorage.setItem("jwtToken", userData.token);
 		dispatch({
@@ -59,10 +64,10 @@ function AuthProvider(props) {
 	}
 
 	return (
-		<AuthContext.Provider
-			value={{ user: state.user, login, logout }}
-			{...props}
-		/>
+		//value property is what we can retrieve from the context
+		<AuthContext.Provider value={{ user: state.user, login, logout }}>
+			{props.children}
+		</AuthContext.Provider>
 	);
 }
 //AuthContext to access context

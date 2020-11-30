@@ -12,24 +12,25 @@ function DeleteButton({ postId, commentId, callback }) {
 	const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION;
 
 	const [deletePostOrMutation] = useMutation(mutation, {
+		//only runs when someone hits "confirm"
 		update(proxy) {
-			setConfirmOpen(false);
+			setConfirmOpen(false); //close model
 			if (!commentId) {
+				//while deleting from database we need to update frontend
 				const data = proxy.readQuery({
 					query: FETCH_POSTS_QUERY,
 				});
+				//update posts
 				data.getPosts = data.getPosts.filter((p) => p.id !== postId);
 				proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
 			}
 			if (callback) callback();
 		},
-		//commentId will be null if not provided
 		variables: {
 			postId,
 			commentId,
 		},
 	});
-
 	return (
 		<>
 			<MyPopup content={commentId ? "Delete comment" : "Delete post"}>
@@ -43,9 +44,9 @@ function DeleteButton({ postId, commentId, callback }) {
 				</Button>
 			</MyPopup>
 			<Confirm
-				open={confirmOpen}
-				onConfirm={deletePost}
+				open={confirmOpen} //Boolean decides to show confirm box or not
 				onCancel={() => setConfirmOpen(false)}
+				onConfirm={deletePostOrMutation}
 			/>
 		</>
 	);

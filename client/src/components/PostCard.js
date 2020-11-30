@@ -13,13 +13,10 @@ function PostCard({
 }) {
 	const { user } = useContext(AuthContext);
 
-	function commentOnPost() {
-		console.log("comment");
-	}
-
 	return (
 		<Card fluid>
 			<Card.Content>
+				{/* Picture */}
 				<Image
 					floated="right"
 					size="mini"
@@ -34,7 +31,7 @@ function PostCard({
 			<Card.Content extra>
 				<LikeButton user={user} post={{ id, likes, likeCount }} />
 				<MyPopup content="Comment on post">
-					<Button as="div" labelPosition="right" as={Link} to={`/posts/${id}`}>
+					<Button labelPosition="right" as={Link} to={`/posts/${id}`}>
 						<Button color="blue" basic>
 							<Icon name="comments" />
 						</Button>
@@ -43,7 +40,8 @@ function PostCard({
 						</Label>
 					</Button>
 				</MyPopup>
-				{user & (user.name === username) && <DeleteButton postId={id} />}
+				{/* If user is logged in show delete button */}
+				{user && user.username === username && <DeleteButton postId={id} />}
 			</Card.Content>
 		</Card>
 	);

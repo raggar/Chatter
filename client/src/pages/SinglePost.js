@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from " react";
+import React, { useContext, useState, useRef } from "react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/client";
 import {
@@ -18,13 +18,12 @@ import LikeButton from "../components/LikeButton";
 import MyPopup from "../util/MyPopup";
 
 function SinglePost(props) {
+	const postId = props.match.params.postId; //obtained from url (used to load this component)
 	const { user } = useContext(AuthContext);
 	const commentInputRef = useRef(null);
 
-	const postId = props.match.params.postId; //url params
-	const {
-		data: { getPost },
-	} = useQuery(FETCH_POST_QUERY, {
+	const { data } = useQuery(FETCH_POST_QUERY, {
+		//passing in postId to the query
 		variables: {
 			postId,
 		},
@@ -34,8 +33,8 @@ function SinglePost(props) {
 
 	const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
 		update() {
-			setComment("");
-			commentInputRef.current.blur();
+			setComment(""); //clear comment box
+			commentInputRef.current.blur(); //fix focus
 		},
 		variables: postId,
 		body: comment,
@@ -46,7 +45,9 @@ function SinglePost(props) {
 	}
 
 	let postMarkup;
-	if (!getPost) {
+
+	//if there is no posts
+	if (!data) {
 		postMarkup = <p>Loading post...</p>;
 	} else {
 		const {
@@ -58,7 +59,7 @@ function SinglePost(props) {
 			likes,
 			likeCount,
 			commentCount,
-		} = getPost;
+		} = data.getPost;
 
 		postMarkup = (
 			<Grid>
@@ -70,29 +71,29 @@ function SinglePost(props) {
 							float="right"
 						/>
 					</Grid.Column>
-					<Grid.Column>
+					<Grid.Column width={10}>
 						<Card fluid>
-							{" "}
-							{/* fluid ensures all width is taken up*/}
 							<Card.Content>
 								<Card.Header>{username}</Card.Header>
-								<Card.Meta>{moment(createdAt.fromNow())}</Card.Meta>
+								<Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
 								<Card.Description>{body}</Card.Description>
 							</Card.Content>
+							<hr />
 							<Card.Content extra>
 								<LikeButton user={user} post={{ id, likeCount, likes }} />
+								{/* Popup container */}
 								<MyPopup content="Comment on post">
 									<Button
 										as="div"
 										labelPosition="right"
-										onClick={() => console.log("Comment on Post")}
+										onClick={() => console.log("Comment on post")}
 									>
 										<Button basic color="blue">
 											<Icon name="comments" />
-											<Label basic color="blue" pointing="left">
-												{commentCount}
-											</Label>
 										</Button>
+										<Label basic color="blue" pointing="left">
+											{commentCount}
+										</Label>
 									</Button>
 								</MyPopup>
 								{user && user.username === username && (
@@ -100,15 +101,16 @@ function SinglePost(props) {
 								)}
 							</Card.Content>
 						</Card>
+						{/* If there exists a user create an input to submit a comment*/}
 						{user && (
 							<Card fluid>
-								<Card.Comment>
+								<Card.Content>
 									<p>Post a comment</p>
 									<Form>
 										<div className="ui action input fluid">
 											<input
 												type="text"
-												placeholder="Comment..."
+												placeholder="Comment.."
 												name="comment"
 												value={comment}
 												onChange={(event) => setComment(event.target.value)}
@@ -119,20 +121,23 @@ function SinglePost(props) {
 												className="ui button teal"
 												disabled={comment.trim() === ""}
 												onClick={submitComment}
-											/>
+											>
+												Submit
+											</button>
 										</div>
 									</Form>
-								</Card.Comment>
+								</Card.Content>
 							</Card>
 						)}
 						{comments.map((comment) => (
 							<Card fluid key={comment.id}>
 								<Card.Content>
+									{/* If there exists a user add a delete button */}
 									{user && user.username === comment.username && (
 										<DeleteButton postId={id} commentId={comment.id} />
 									)}
 									<Card.Header>{comment.username}</Card.Header>
-									<Card.Meta>{moment(comment.createdAt.fromNow())}</Card.Meta>
+									<Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
 									<Card.Description>{comment.body}</Card.Description>
 								</Card.Content>
 							</Card>

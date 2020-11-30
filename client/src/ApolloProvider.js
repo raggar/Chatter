@@ -7,6 +7,7 @@ import {
 	ApolloProvider,
 } from "@apollo/client";
 import { setContext } from "apollo-link-context";
+import { AuthProvider } from "./context/auth";
 
 //connects to graphql server
 const httpLink = createHttpLink({
@@ -23,6 +24,7 @@ const authLink = setContext(() => {
 	};
 });
 
+//Create new apollo client (which can take children by default)
 const client = new ApolloClient({
 	link: authLink.concat(httpLink),
 	cache: new InMemoryCache(),
@@ -30,6 +32,8 @@ const client = new ApolloClient({
 
 export default (
 	<ApolloProvider client={client}>
-		<App />
+		<AuthProvider>
+			<App />
+		</AuthProvider>
 	</ApolloProvider>
 );
