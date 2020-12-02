@@ -8,7 +8,6 @@ let args = process.argv;
 
 args.splice(0, 2);
 let str = args.join(" ");
-console.log("ARGUEMENTS", str);
 
 exec("git add .", add_cb);
 

@@ -42,7 +42,7 @@ export default function PostForm() {
 					></Form.Input>
 				</Form.Field>
 			</Form>
-			{error?.graphQLErrors && (
+			{error && (
 				<div className="ui error message" style={{ marginBottom: 20 }}>
 					<ul className="list">
 						<li>{error.graphQLErrors[0].message}</li>
