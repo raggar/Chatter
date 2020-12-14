@@ -14,18 +14,28 @@ export default function PostForm() {
 	const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
 		variables: values,
 		update(proxy, result) {
-			//data in our cache is in data
 			const data = proxy.readQuery({
 				query: FETCH_POSTS_QUERY,
 			});
-			data.getPosts = [result.data.createPost, ...data.getPosts];
-			proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
+			proxy.writeQuery({
+				query: FETCH_POSTS_QUERY,
+				data: {
+					getPosts: [result.data.createPost, ...data.getPosts],
+				},
+			});
 			values.body = "";
+		},
+		onError(err) {
+			return err;
 		},
 	});
 
 	function createPostCallback() {
 		createPost();
+	}
+
+	if (error) {
+		return `Error: ${error}`;
 	}
 
 	return (
@@ -42,13 +52,13 @@ export default function PostForm() {
 					></Form.Input>
 				</Form.Field>
 			</Form>
-			{error && (
+			{/* {error && (
 				<div className="ui error message" style={{ marginBottom: 20 }}>
 					<ul className="list">
 						<li>{error.graphQLErrors[0].message}</li>
 					</ul>
 				</div>
-			)}
+			)} */}
 		</>
 	);
 }
@@ -60,18 +70,18 @@ const CREATE_POST_MUTATION = gql`
 			body
 			createdAt
 			username
-			likes {
-				id
-				username
-				createdAt
-			}
-			likeCount
 			comments {
 				id
 				body
 				username
 				createdAt
 			}
+			likes {
+				id
+				username
+				createdAt
+			}
+			likeCount
 		}
 		commentCount
 	}

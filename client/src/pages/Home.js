@@ -13,7 +13,17 @@ function Home() {
 
 	//query name is added to data property
 	//CAREFUL: dont destructure data in useQuery (property might not exist by the time mutation is made)
-	const { loading, data } = useQuery(FETCH_POSTS_QUERY);
+	const { loading, error, data } = useQuery(FETCH_POSTS_QUERY);
+
+	if (loading) {
+		return <h1>Loading posts..</h1>;
+	}
+
+	if (error) {
+		return `Error ${error.message}`;
+	}
+
+	console.table(data.getPosts);
 
 	return (
 		<Grid columns={3}>
@@ -26,19 +36,14 @@ function Home() {
 						<PostForm />
 					</Grid.Column>
 				)}
-				{/* If the posts are still loading */}
-				{loading ? (
-					<h1>Loading posts..</h1>
-				) : (
-					<Transition.Group>
-						{data &&
-							data.getPosts.map((post) => (
-								<Grid.Column key={post.id} style={{ marginBottom: 20 }}>
-									<PostCard post={post} />
-								</Grid.Column>
-							))}
-					</Transition.Group>
-				)}
+				<Transition.Group>
+					{data &&
+						data.getPosts.map((post) => (
+							<Grid.Column key={post.id} style={{ marginBottom: 20 }}>
+								<PostCard post={post} />
+							</Grid.Column>
+						))}
+				</Transition.Group>
 			</Grid.Row>
 		</Grid>
 	);

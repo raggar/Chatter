@@ -1,0 +1,43 @@
+// run eslint --init file in each project's root directory and copy and paste the following config
+// ensure that you select the option to "enforce coding style"
+
+// ** Notes
+// select the config to extend Airbnb's Style Guide: https://github.com/airbnb/javascript
+// ** run the below command
+// ** npm i -D eslint prettier eslint-plugin-prettier eslint-config-prettier
+// "extends": [..."prettier"] should always go last
+
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "es2021": true
+  },
+  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "import/no-unresolved": [2, { "ignore": ["^(all|part):"] }],
+    "react/jsx-one-expression-per-line": "off",
+    "no-underscore-dangle": "off",
+    "react/prop-types": 0,
+    "react/no-unescaped-entities": 0,
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "prettier/prettier": "error",
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "func-names": "off",
+    "no-process-exit": "off",
+    "object-shorthand": "off",
+    "class-methods-use-this": "off"
+  },
+  "root": true
+}

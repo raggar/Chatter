@@ -1,3 +1,11 @@
+/* 
+
+Todo 
+ - rework caching
+ - "cannot read propert username of null"
+
+*/
+
 import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
@@ -11,26 +19,33 @@ function DeleteButton({ postId, commentId, callback }) {
 
 	const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION;
 
-	const [deletePostOrMutation] = useMutation(mutation, {
-		//only runs when someone hits "confirm"
-		update(proxy) {
-			setConfirmOpen(false); //close model
-			if (!commentId) {
-				//while deleting from database we need to update frontend
-				const data = proxy.readQuery({
-					query: FETCH_POSTS_QUERY,
-				});
-				//update posts
-				data.getPosts = data.getPosts.filter((p) => p.id !== postId);
-				proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
-			}
-			if (callback) callback();
-		},
+	const [deletePostOrMutation, { error }] = useMutation(mutation, {
 		variables: {
 			postId,
 			commentId,
 		},
+		update(proxy, result) {
+			setConfirmOpen(false);
+			if (!commentId) {
+				const data = proxy.readQuery({
+					query: FETCH_POSTS_QUERY,
+				});
+				proxy.writeQuery({
+					query: FETCH_POSTS_QUERY,
+					data: {
+						getPosts: data.getPosts.filter((p) => p.id !== postId),
+					},
+				});
+			}
+			if (callback) {
+				callback();
+			}
+		},
+		onError(err) {
+			return err;
+		},
 	});
+
 	return (
 		<>
 			<MyPopup content={commentId ? "Delete comment" : "Delete post"}>
