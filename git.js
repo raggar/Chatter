@@ -4,25 +4,29 @@
 const { exec } = require('child_process');
 
 const args = process.argv;
+console.log(args);
 // args = [node, file_path, text after "--"]
 
 args.splice(0, 2);
-const str = args.join(' ');
+console.log(args);
+const str = args.join(' ').slice(2);
 
-function CommitCb(err, strout, sdtin) {
-  if (err) {
-    console.log(err);
+exec('git add .', (addError, addStrout, addSdtin) => {
+  if (addError) {
+    console.log('Git add error', addError);
     return;
   }
-  console.log('Done :)');
-}
-
-function AddCb(err, strout, sdtin) {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  exec(`git commit -m "${str}"`, CommitCb);
-}
-
-exec('git add .', AddCb);
+  exec(`git commit -m "${str}"`, (commitError, commitStrout, commitSdtin) => {
+    if (commitError) {
+      console.log('Commit Error', commitError);
+      return;
+    }
+    exec(`git push origin master`, (pushError, pushStrout, pushSdtin) => {
+      if (pushError) {
+        console.log('Push Error:', pushError);
+        return;
+      }
+      console.log('Successfully pushed code :) ');
+    });
+  });
+});

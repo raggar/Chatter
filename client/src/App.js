@@ -7,7 +7,6 @@ import 'semantic-ui-css/semantic.min.css';
 import './App.css'; // will override default styles from semantic css (since it's after)
 
 import AuthRoute from './util/AuthRoute';
-
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Register from './pages/Register';
