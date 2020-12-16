@@ -29,7 +29,7 @@ module.exports = {
     async createPost(_, { body }, context) {
       const user = checkAuth(context);
 
-      if (body.trim() == '') {
+      if (body.trim() === '') {
         throw new Error('Post body must not be empty');
       }
 
@@ -73,7 +73,7 @@ module.exports = {
         // if we liked the post
         if (post.likes.find((like) => like.username === username)) {
           // remove current user's name from array of people who liked the post
-          post.likes = post.likes.filter((like) => like.username != username);
+          post.likes = post.likes.filter((like) => like.username !== username);
         } else {
           // Not liked, like post
           post.likes.push({
