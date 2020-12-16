@@ -1,15 +1,14 @@
 // file to add and commit files efficiently
+// npm run gitty -- message
 
 // exec method lets us run commands
 const { exec } = require('child_process');
 
 const args = process.argv;
-console.log(args);
-// args = [node, file_path, text after "--"]
+console.log('ARGS', args);
 
 args.splice(0, 2);
-console.log(args);
-const str = args.join(' ').slice(2);
+const str = args.join(' ');
 
 exec('git add .', (addError, addStrout, addSdtin) => {
   if (addError) {

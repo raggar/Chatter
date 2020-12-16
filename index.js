@@ -5,7 +5,7 @@ const resolvers = require('./graphql/resolvers'); // contain logic for each quer
 const { MONGODB } = require('./config');
 const typeDefs = require('./graphql/typeDefs'); // where each query/mutation is defined
 
-const pubsub = new PubSub(); // uses websockets to listen for new posts made
+const pubsub = new PubSub(); // uses websockets to listen for new posts
 
 // instance of Apollo Server
 const server = new ApolloServer({
