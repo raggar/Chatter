@@ -1,22 +1,21 @@
-import React, { useContext } from "react";
-import { Route, Redirect } from "react-router-dom";
+import React, { useContext } from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
-import { AuthContext } from "../context/auth";
+import { AuthContext } from '../context/auth';
 
-//component property is "renamed" Component
 function AuthRoute({ component: Component, ...rest }) {
-	//...rest is the Route props
-	//...props is Route component props
-	const { user } = useContext(AuthContext);
+  // ...rest is the Route props
+  // ...props is Route component props
+  const { user } = useContext(AuthContext);
 
-	return (
-		<Route
-			{...rest}
-			render={(props) =>
-				user ? <Redirect to="/" /> : <Component {...props} />
-			}
-		/>
-	);
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        user ? <Redirect to="/" /> : <Component {...props} />
+      }
+    />
+  );
 }
 
 export default AuthRoute;

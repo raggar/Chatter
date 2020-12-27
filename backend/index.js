@@ -1,13 +1,12 @@
 const { ApolloServer, PubSub } = require('apollo-server');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const resolvers = require('./graphql/resolvers'); // contain logic for each query/mutation (don't need to specify /index at the end since its default file)
-const { MONGODB } = require('./config');
 const typeDefs = require('./graphql/typeDefs'); // where each query/mutation is defined
 
 const pubsub = new PubSub(); // uses websockets to listen for new posts
 
-// instance of Apollo Server
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -15,11 +14,16 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req, pubsub }), // take request body and forward to context
 });
 
+const PORT = process.env.port || 5000;
+
 mongoose
-  .connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGODB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
-    console.log('Connected to db');
-    return server.listen({ port: 5000 });
+    console.log('Connected to database successfully :)');
+    return server.listen({ port: PORT });
   })
   .then((res) => {
     console.log(`Server is running at ${res.url}`);

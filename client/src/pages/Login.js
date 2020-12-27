@@ -3,7 +3,7 @@ import { Form, Button } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 
-import { useForm } from '../util/hooks';
+import useForm from '../util/useForm';
 import { AuthContext } from '../context/auth';
 
 export default function Login(props) {
@@ -20,7 +20,7 @@ export default function Login(props) {
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     // when loginUser is called and if mutation is successfully executed
     update(_, { data: { login: userData } }) {
-      context.login(userData);
+      context.login(userData); // plant token in header
       props.history.push('/');
     },
     variables: values,
@@ -33,10 +33,6 @@ export default function Login(props) {
 
   function loginUserCallback() {
     loginUser();
-  }
-
-  if (loading) {
-    return <p>loading</p>;
   }
 
   return (
@@ -69,6 +65,7 @@ export default function Login(props) {
           Login
         </Button>
       </Form>
+      {loading ? <p>Logging in user...</p> : ''}
       {/* Any Error Messages */}
       {Object.keys(errors).length > 0 && (
         <div className="ui error message">

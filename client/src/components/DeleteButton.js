@@ -1,91 +1,92 @@
-/* 
+import React, { useState } from 'react';
+import gql from 'graphql-tag';
+import { useLocation } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { Button, Confirm, Icon } from 'semantic-ui-react';
 
-Todo 
- - rework caching
- - "cannot read propert username of null"
+import { FETCH_POSTS_QUERY } from '../util/graphql';
+import MyPopup from '../util/MyPopup';
 
-*/
+function DeleteButton(props) {
+  const { postId, commentId, refetch } = props;
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
-import React, { useState } from "react";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/client";
-import { Button, Confirm, Icon } from "semantic-ui-react";
+  const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION;
 
-import { FETCH_POSTS_QUERY } from "../util/graphql";
-import MyPopup from "../util/MyPopup";
+  const [deletePostOrMutation, { error }] = useMutation(mutation, {
+    variables: {
+      postId,
+      commentId,
+    },
+    update(proxy, result) {
+      setConfirmOpen(false);
+      if (!commentId) {
+        // TODO double check if "proxy" or "client" is used
+        const data = proxy.readQuery({
+          query: FETCH_POSTS_QUERY,
+        });
+        proxy.writeQuery({
+          query: FETCH_POSTS_QUERY,
+          data: {
+            getPosts: data.getPosts.filter((p) => p.id !== postId),
+          },
+        });
+      }
+      // if (error) {
+      //   console.error(error);
+      // }
+      refetch();
+      const location = useLocation();
+      console.log(location.pathname);
+      // if path is single post page, then redirect to home page after refetching (if not means we are already on home page)
+    },
 
-function DeleteButton({ postId, commentId, callback }) {
-	const [confirmOpen, setConfirmOpen] = useState(false);
+    onError(err) {
+      console.err(err);
+      return err;
+    },
+  });
 
-	const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION;
-
-	const [deletePostOrMutation, { error }] = useMutation(mutation, {
-		variables: {
-			postId,
-			commentId,
-		},
-		update(proxy, result) {
-			setConfirmOpen(false);
-			if (!commentId) {
-				const data = proxy.readQuery({
-					query: FETCH_POSTS_QUERY,
-				});
-				proxy.writeQuery({
-					query: FETCH_POSTS_QUERY,
-					data: {
-						getPosts: data.getPosts.filter((p) => p.id !== postId),
-					},
-				});
-			}
-			if (callback) {
-				callback();
-			}
-		},
-		onError(err) {
-			return err;
-		},
-	});
-
-	return (
-		<>
-			<MyPopup content={commentId ? "Delete comment" : "Delete post"}>
-				<Button
-					as="div"
-					color="red"
-					floated="right"
-					onClick={() => setConfirmOpen(true)}
-				>
-					<Icon name="trash" style={{ margin: 0 }} />
-				</Button>
-			</MyPopup>
-			<Confirm
-				open={confirmOpen} //Boolean decides to show confirm box or not
-				onCancel={() => setConfirmOpen(false)}
-				onConfirm={deletePostOrMutation}
-			/>
-		</>
-	);
+  return (
+    <>
+      <MyPopup content={commentId ? 'Delete comment' : 'Delete post'}>
+        <Button
+          as="div"
+          color="red"
+          floated="right"
+          onClick={() => setConfirmOpen(true)}
+        >
+          <Icon name="trash" style={{ margin: 0 }} />
+        </Button>
+      </MyPopup>
+      <Confirm
+        open={confirmOpen} // Boolean decides to show confirm box or not
+        onCancel={() => setConfirmOpen(false)}
+        onConfirm={deletePostOrMutation}
+      />
+    </>
+  );
 }
 
 const DELETE_POST_MUTATION = gql`
-	mutation deletePost($postId: ID!) {
-		deletePost(postId: $postId)
-	}
+  mutation deletePost($postId: ID!) {
+    deletePost(postId: $postId)
+  }
 `;
 
 const DELETE_COMMENT_MUTATION = gql`
-	mutation deleteComment($postId: ID!, $commentId: ID!) {
-		deleteComment(postId: $postId, commentId: $commentId) {
-			id
-			comments {
-				id
-				username
-				createdAt
-				body
-			}
-			commentCount
-		}
-	}
+  mutation deleteComment($postId: ID!, $commentId: ID!) {
+    deleteComment(postId: $postId, commentId: $commentId) {
+      id
+      comments {
+        id
+        username
+        createdAt
+        body
+      }
+      commentCount
+    }
+  }
 `;
 
 export default DeleteButton;
