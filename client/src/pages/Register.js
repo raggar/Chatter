@@ -48,7 +48,7 @@ export default function Register(props) {
           type="text"
           value={values.username}
           onChange={onChange}
-          error={!!errors.username}
+          error={errors && errors.username ? true : false}
         />
         {/* Email */}
         <Form.Input
@@ -58,7 +58,7 @@ export default function Register(props) {
           type="email"
           value={values.email}
           onChange={onChange}
-          error={!!errors.email}
+          error={errors && errors.email ? true : false}
         />
         {/* Password */}
         <Form.Input
@@ -68,7 +68,7 @@ export default function Register(props) {
           name="password"
           value={values.password}
           onChange={onChange}
-          error={!!errors.password}
+          error={errors && errors.password ? true : false}
         />
         {/* Confirm Password */}
         <Form.Input
@@ -78,7 +78,7 @@ export default function Register(props) {
           name="confirmPassword"
           value={values.confirmPassword}
           onChange={onChange}
-          error={!!errors.confirmPassword}
+          error={errors && errors.confirmPassword ? true : false}
         />
         <Button type="submit" primary>
           Register
@@ -86,7 +86,7 @@ export default function Register(props) {
       </Form>
       {loading ? <p>Registering user...</p> : ''}
       {/* If there are any errors */}
-      {Object.keys(errors).length > 0 && (
+      {errors && Object.keys(errors).length > 0 && (
         <div className="ui error message">
           <ul className="list">
             {Object.values(errors).map((value) => (

@@ -1,9 +1,7 @@
-import { useState, useContext } from 'react';
-import { AuthContext } from '../context/auth';
+import { useState } from 'react';
 
 const useForm = (callback, initialState = {}) => {
   const [values, setValues] = useState(initialState);
-  const { user } = useContext(AuthContext);
 
   // modify corresponding values
   const onChange = (event) => {
@@ -13,9 +11,7 @@ const useForm = (callback, initialState = {}) => {
   // when form is submitted dont refresh
   const onSubmit = (event) => {
     event.preventDefault();
-    if (callback) {
-      callback();
-    }
+    callback();
   };
 
   return {

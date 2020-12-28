@@ -32,6 +32,7 @@ function DeleteButton(props) {
           },
         });
       }
+
       // if (error) {
       //   console.error(error);
       // }
