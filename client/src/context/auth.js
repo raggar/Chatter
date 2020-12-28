@@ -10,6 +10,7 @@ if (localStorage.getItem('jwtToken')) {
 
   if (decodedToken.exp * 1000 < Date.now()) {
     localStorage.removeItem('jwtToken');
+    initialState.user = null;
   } else {
     initialState.user = decodedToken;
   }

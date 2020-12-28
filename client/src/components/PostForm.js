@@ -25,8 +25,6 @@ export default function PostForm(props) {
       });
       values.body = '';
       props.refetch();
-      props.history.push('/');
-      // refetch queries and redirect to home page;
     },
     onError(err) {
       return err;
@@ -55,13 +53,13 @@ export default function PostForm(props) {
           />
         </Form.Field>
       </Form>
-      {/* {error && (
-				<div className="ui error message" style={{ marginBottom: 20 }}>
-					<ul className="list">
-						<li>{error.graphQLErrors[0].message}</li>
-					</ul>
-				</div>
-			)} */}
+      {error && (
+        <div className="ui error message" style={{ marginBottom: 20 }}>
+          <ul className="list">
+            <li>{error.graphQLErrors[0].message}</li>
+          </ul>
+        </div>
+      )}
     </>
   );
 }

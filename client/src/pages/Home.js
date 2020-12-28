@@ -32,6 +32,12 @@ function Home() {
     return `Error ${error.message}`;
   }
 
+  if (user) {
+    console.log('Current logged in user:', user.token);
+  } else {
+    console.log('There is no logged in user');
+  }
+
   console.table(data.getPosts);
 
   return (

@@ -13,10 +13,8 @@ const useForm = (callback, initialState = {}) => {
   // when form is submitted dont refresh
   const onSubmit = (event) => {
     event.preventDefault();
-    if (user) {
+    if (callback) {
       callback();
-    } else {
-      console.error('There is no user');
     }
   };
 

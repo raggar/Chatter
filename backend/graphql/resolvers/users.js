@@ -23,7 +23,7 @@ function generateToken(user) {
 
 module.exports = {
   Mutation: {
-    async login(_, { username, password }) {
+    async login(_, { username, password }, context) {
       const { errors, valid } = validateLoginInput(username, password);
 
       if (!valid) {
@@ -43,9 +43,8 @@ module.exports = {
         errors.general = 'Wrong credentials';
         throw new UserInputError('Wrong credentials', { errors });
       }
-      // if everything was valid then generate a token
       const token = generateToken(user);
-      console.log('User logged in information', user._doc);
+      context.req.headers.authorization = `Bearer ${token}`;
 
       return {
         ...user._doc,
@@ -56,7 +55,7 @@ module.exports = {
     // args will be "RegisterInput" which contains the fields we described earlier
     async register(
       _,
-      { registerInput: { username, email, password, confirmPassword } }
+      { registerInput: { username, email, password, confirmPassword }, context }
     ) {
       const { valid, errors } = validateRegisterInput(
         username,
@@ -88,6 +87,7 @@ module.exports = {
       const res = await newUser.save();
 
       const token = generateToken(res);
+      context.req.headers.authorization = `Bearer ${token}`;
 
       return {
         ...res._doc,

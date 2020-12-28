@@ -42,7 +42,7 @@ function DeleteButton(props) {
     },
 
     onError(err) {
-      console.err(err);
+      console.log(error);
       return err;
     },
   });
