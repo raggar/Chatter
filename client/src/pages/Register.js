@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
+import emailjs from 'emailjs-com';
 import gql from 'graphql-tag';
 
 import { AuthContext } from '../context/auth';
@@ -17,13 +18,32 @@ export default function Register(props) {
     confirmPassword: '',
   });
 
+  function sendEmail(e) {
+    e.preventDefault();
+    emailjs
+      .sendForm(
+        process.env.REACT_APP_SERVICE_ID,
+        process.env.REACT_APP_TEMPLATE_ID,
+        e.target,
+        process.env.REACT_APP_USER_ID
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  }
+
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     onCompleted(data) {
       context.login(data.register);
       props.history.push('/');
     },
     onError(err) {
-      if (err.graphQLErrors[0]) {
+      if (err.graphQLErrors[0].extensions.errors) {
         setErrors(err.graphQLErrors[0].extensions.errors);
       }
     },
@@ -38,7 +58,18 @@ export default function Register(props) {
   return (
     <div className="form-container">
       {/* Register Form */}
-      <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
+      <Form
+        onSubmit={(e) => {
+          onSubmit(e);
+          if (Object.values(errors).length > 0) {
+            console.log('Error in registration, no email sent');
+          } else {
+            sendEmail(e); // *! note that email still sends if fields are incorrect (only on first attempt)
+          }
+        }}
+        noValidate
+        className={loading ? 'loading' : ''}
+      >
         <h1>Register</h1>
 
         {/* Username */}
