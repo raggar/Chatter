@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
-import { useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Confirm, Icon } from 'semantic-ui-react';
 
 import { FETCH_POSTS_QUERY } from '../util/graphql';
 import MyPopup from '../util/MyPopup';
 
-function DeleteButton(props) {
-  const { postId, commentId, refetch } = props;
+function DeleteButton({ postId, commentId, refetch, callback }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION;
@@ -18,10 +16,9 @@ function DeleteButton(props) {
       postId,
       commentId,
     },
-    update(proxy, result) {
+    /* eslint-disable-line */ update(proxy, result) {
       setConfirmOpen(false);
       if (!commentId) {
-        // TODO double check if "proxy" or "client" is used
         const data = proxy.readQuery({
           query: FETCH_POSTS_QUERY,
         });
@@ -32,16 +29,13 @@ function DeleteButton(props) {
           },
         });
       }
-
-      // if (error) {
-      //   console.error(error);
-      // }
-      refetch();
-      const location = useLocation();
-      console.log(location.pathname);
-      // if path is single post page, then redirect to home page after refetching (if not means we are already on home page)
+      if (callback) {
+        callback();
+      }
     },
-
+    onCompleted() {
+      refetch();
+    },
     onError(err) {
       console.log(error);
       return err;

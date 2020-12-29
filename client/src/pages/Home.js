@@ -8,15 +8,17 @@ import PostForm from '../components/PostForm';
 import { FETCH_POSTS_QUERY } from '../util/graphql';
 
 function Home() {
-  // grab current user
   const { user } = useContext(AuthContext);
 
   // query name is added to data property
   // CAREFUL: dont destructure data in useQuery (property might not exist by the time mutation is made)
-  const { loading, error, data, refetch, networkStatus } = useQuery(
+  const { loading, data, networkStatus, refetch } = useQuery(
     FETCH_POSTS_QUERY,
     {
       notifyOnNetworkStatusChange: true,
+      onError(err) {
+        console.log('Login Error:', err);
+      },
     }
   );
 
@@ -28,18 +30,6 @@ function Home() {
     return <h1>Loading posts..</h1>;
   }
 
-  if (error) {
-    return `Error ${error.message}`;
-  }
-
-  if (user) {
-    console.log('Current logged in user:', user.token);
-  } else {
-    console.log('There is no logged in user');
-  }
-
-  console.table(data.getPosts);
-
   return (
     <Grid columns={3}>
       <Grid.Row className="page-title">
@@ -48,7 +38,7 @@ function Home() {
       <Grid.Row>
         {user && (
           <Grid.Column>
-            <PostForm refetch={refetch} />
+            <PostForm />
           </Grid.Column>
         )}
         <Transition.Group>

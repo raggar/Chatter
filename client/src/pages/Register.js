@@ -7,7 +7,7 @@ import { AuthContext } from '../context/auth';
 import useForm from '../util/useForm';
 
 export default function Register(props) {
-  const user = useContext(AuthContext);
+  const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
   const { onChange, onSubmit, values } = useForm(registerUser, {
@@ -18,13 +18,14 @@ export default function Register(props) {
   });
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    // if addUser is called and mutation is sucessful
-    update(_, { data: { register: userData } }) {
-      user.login(userData);
+    onCompleted(data) {
+      context.login(data.register);
       props.history.push('/');
     },
     onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      if (err.graphQLErrors[0]) {
+        setErrors(err.graphQLErrors[0].extensions.errors);
+      }
     },
     variables: values,
   });
@@ -85,7 +86,6 @@ export default function Register(props) {
         </Button>
       </Form>
       {loading ? <p>Registering user...</p> : ''}
-      {/* If there are any errors */}
       {errors && Object.keys(errors).length > 0 && (
         <div className="ui error message">
           <ul className="list">
