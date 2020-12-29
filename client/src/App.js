@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
+import * as Sentry from '@sentry/react';
 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css'; // will override default styles from semantic css (since it's after)
@@ -26,4 +27,4 @@ function App() {
   );
 }
 
-export default App;
+export default Sentry.withProfiler(App);
