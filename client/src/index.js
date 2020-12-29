@@ -1,12 +1,14 @@
 import ReactDOM from 'react-dom';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
+import dotenv from 'dotenv';
 import reportWebVitals from './reportWebVitals';
 import Provider from './ApolloProvider';
 
+dotenv.config();
+
 Sentry.init({
-  dsn:
-    'https://d300ebb9bd3d4a629e3c004d8bccb900@o497733.ingest.sentry.io/5574340',
+  dsn: process.env.SENTRY_KEY,
   autoSessionTracking: true,
   integrations: [new Integrations.BrowserTracing()],
   release: `Chatter${process.env.npm_package_version}`,
