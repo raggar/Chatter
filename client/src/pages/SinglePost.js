@@ -33,7 +33,7 @@ function SinglePost(props) {
   const [comment, setComment] = useState('');
 
   const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
-    update() {
+    onCompleted() {
       setComment(''); // clear comment box
       commentInputRef.current.blur(); // fix focus
     },
