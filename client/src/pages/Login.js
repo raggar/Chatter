@@ -60,7 +60,7 @@ export default function Login(props) {
           error={errors && errors.password ? true : false}
         />
         {/* Submit Button */}
-        <Button type="submit" primary>
+        <Button type="submit" primary style={{ background: '#00b5ad' }}>
           Login
         </Button>
       </Form>

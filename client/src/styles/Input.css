@@ -1,0 +1,27 @@
+#input {
+    display: flex;
+    border-top: 2px solid #D3D3D3;
+  }
+
+#input input {
+  border: none;
+  border-radius: 0;
+  padding: 5%;
+  width: 80%;
+  font-size: 1.2em;
+}
+
+#input input:focus, #input textarea:focus, #input select:focus{
+  outline: none;
+}
+
+#input button {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #00b5ad;
+  padding: 20px;
+  display: inline-block;
+  border: none;
+  width: 20%;
+}
