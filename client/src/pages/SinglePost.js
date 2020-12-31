@@ -19,6 +19,7 @@ import MyPopup from '../util/MyPopup';
 
 function SinglePost(props) {
   const { postId } = props.match.params; // obtained from url (used to load this component)
+  console.log(postId);
   const { user } = useContext(AuthContext);
   const commentInputRef = useRef(null);
 
@@ -113,7 +114,10 @@ function SinglePost(props) {
                         placeholder="Comment.."
                         name="comment"
                         value={comment}
-                        onChange={(event) => setComment(event.target.value)}
+                        onChange={(event) => {
+                          setComment(event.target.value);
+                          console.log(event.target.value);
+                        }}
                         ref={commentInputRef}
                       />
                       <button
@@ -160,8 +164,8 @@ const SUBMIT_COMMENT_MUTATION = gql`
         createdAt
         usename
       }
+      commentCount
     }
-    commentCount
   }
 `;
 
