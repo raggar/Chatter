@@ -112,7 +112,7 @@ export default function Register(props) {
           onChange={onChange}
           error={errors && errors.confirmPassword ? true : false}
         />
-        <Button type="submit" primary>
+        <Button type="submit" primary style={{ background: '#00b5ad' }}>
           Register
         </Button>
       </Form>

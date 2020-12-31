@@ -16,7 +16,7 @@ function FallbackComponent() {
 }
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5000',
+  uri: 'http://localhost:5000/graphql',
 });
 
 // used to add token to user's header
