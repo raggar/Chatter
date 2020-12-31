@@ -44,7 +44,10 @@ module.exports = {
         throw new UserInputError('Wrong credentials', { errors });
       }
       const token = generateToken(user);
-      context.req.headers.authorization = `Bearer ${token}`;
+
+      if (context) {
+        context.req.headers.authorization = `Bearer ${token}`;
+      }
 
       return {
         ...user._doc,
@@ -63,8 +66,9 @@ module.exports = {
         password,
         confirmPassword
       );
+
       if (!valid) {
-        throw new UserInputError('Errors', { errors });
+        throw new UserInputError('Register errors', { errors });
       }
 
       const user = await User.findOne({ username });
@@ -87,7 +91,9 @@ module.exports = {
       const res = await newUser.save();
 
       const token = generateToken(res);
-      context.req.headers.authorization = `Bearer ${token}`;
+      if (context) {
+        context.req.headers.authorization = `Bearer ${token}`;
+      }
 
       return {
         ...res._doc,

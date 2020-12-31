@@ -1,13 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
+import emailjs from 'emailjs-com';
 import gql from 'graphql-tag';
 
 import { AuthContext } from '../context/auth';
 import useForm from '../util/useForm';
 
 export default function Register(props) {
-  const user = useContext(AuthContext);
+  const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
   const { onChange, onSubmit, values } = useForm(registerUser, {
@@ -17,14 +18,34 @@ export default function Register(props) {
     confirmPassword: '',
   });
 
+  function sendEmail(e) {
+    e.preventDefault();
+    emailjs
+      .sendForm(
+        process.env.REACT_APP_SERVICE_ID,
+        process.env.REACT_APP_TEMPLATE_ID,
+        e.target,
+        process.env.REACT_APP_USER_ID
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  }
+
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    // if addUser is called and mutation is sucessful
-    update(_, { data: { register: userData } }) {
-      user.login(userData);
+    onCompleted(data) {
+      context.login(data.register);
       props.history.push('/');
     },
     onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      if (err.graphQLErrors[0].extensions.errors) {
+        setErrors(err.graphQLErrors[0].extensions.errors);
+      }
     },
     variables: values,
   });
@@ -37,7 +58,18 @@ export default function Register(props) {
   return (
     <div className="form-container">
       {/* Register Form */}
-      <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
+      <Form
+        onSubmit={(e) => {
+          onSubmit(e);
+          if (Object.values(errors).length > 0) {
+            console.log('Error in registration, no email sent');
+          } else {
+            sendEmail(e); // *! note that email still sends if fields are incorrect (only on first attempt)
+          }
+        }}
+        noValidate
+        className={loading ? 'loading' : ''}
+      >
         <h1>Register</h1>
 
         {/* Username */}
@@ -80,12 +112,11 @@ export default function Register(props) {
           onChange={onChange}
           error={errors && errors.confirmPassword ? true : false}
         />
-        <Button type="submit" primary>
+        <Button type="submit" primary style={{ background: '#00b5ad' }}>
           Register
         </Button>
       </Form>
       {loading ? <p>Registering user...</p> : ''}
-      {/* If there are any errors */}
       {errors && Object.keys(errors).length > 0 && (
         <div className="ui error message">
           <ul className="list">

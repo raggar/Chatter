@@ -2,4 +2,9 @@ node_modules
 .env
 .eslintrc.json
 .DS_Store
+<<<<<<< HEAD
 package-lock.json
+=======
+client/package-lock.json
+backend/package-lock.json
+>>>>>>> 656fa54a2701ab1adedbc91858bf9dac3a5da5cc

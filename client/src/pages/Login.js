@@ -15,19 +15,18 @@ export default function Login(props) {
     password: '',
   });
 
-  // loginUser is a function that can be used to execute the mutation
-
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-    // when loginUser is called and if mutation is successfully executed
-    update(_, { data: { login: userData } }) {
-      context.login(userData); // plant token in header
+    onCompleted(data) {
+      context.login(data.login);
       props.history.push('/');
     },
     variables: values,
     // if there is an error with the mutation we will popular the errors state
     onError(err) {
-      console.log(err.graphQLErrors[0].extensions.exception);
-      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      console.log('Login Error:', err);
+      if (err.graphQLErrors) {
+        setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      }
     },
   });
 
@@ -48,7 +47,7 @@ export default function Login(props) {
           type="text"
           value={values.username}
           onChange={onChange}
-          error={!!errors.username}
+          error={errors && errors.username ? true : false}
         />
         {/* Password */}
         <Form.Input
@@ -58,16 +57,15 @@ export default function Login(props) {
           name="password"
           value={values.password}
           onChange={onChange}
-          error={!!errors.password}
+          error={errors && errors.password ? true : false}
         />
         {/* Submit Button */}
-        <Button type="submit" primary>
+        <Button type="submit" primary style={{ background: '#00b5ad' }}>
           Login
         </Button>
       </Form>
       {loading ? <p>Logging in user...</p> : ''}
-      {/* Any Error Messages */}
-      {Object.keys(errors).length > 0 && (
+      {errors && Object.keys(errors).length > 0 && (
         <div className="ui error message">
           <ul className="list">
             {Object.values(errors).map((value) => (
@@ -81,7 +79,6 @@ export default function Login(props) {
 }
 
 const LOGIN_USER = gql`
-  # first line defines "login" schema
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       id

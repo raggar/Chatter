@@ -6,12 +6,17 @@ import {
   ApolloProvider,
 } from '@apollo/client';
 import { setContext } from 'apollo-link-context';
+import * as Sentry from '@sentry/react';
+
 import App from './App';
 import { AuthProvider } from './context/auth';
 
-// connects to graphql server
+function FallbackComponent() {
+  return <div>Sentry has caught an error...</div>;
+}
+
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5000',
+  uri: 'http://localhost:5000/graphql',
 });
 
 // used to add token to user's header
@@ -37,7 +42,14 @@ const client = new ApolloClient({
 export default (
   <ApolloProvider client={client}>
     <AuthProvider>
-      <App />
+      <Sentry.ErrorBoundary
+        fallback={FallbackComponent}
+        showDialog
+        onMount={() => console.log('Sentry mounted')}
+        onUnmount={() => console.log('Sentry unmounted')}
+      >
+        <App />
+      </Sentry.ErrorBoundary>
     </AuthProvider>
   </ApolloProvider>
 );

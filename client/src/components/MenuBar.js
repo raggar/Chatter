@@ -19,7 +19,14 @@ function MenuBar() {
       <Menu.Item name={user.username} active as={Link} to="/" />
 
       <Menu.Menu position="right">
-        <Menu.Item name="logout" onClick={logout} />
+        <Menu.Item
+          name="Live Chat"
+          active={activeItem === 'Live Chat'}
+          onClick={handleItemClick}
+          as={Link}
+          to="/join"
+        />
+        <Menu.Item name="logout" onClick={logout} as={Link} to="/login" />
       </Menu.Menu>
     </Menu>
   ) : (

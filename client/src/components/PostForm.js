@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import useForm from '../util/useForm';
 import { FETCH_POSTS_QUERY } from '../util/graphql';
 
-export default function PostForm(props) {
+export default function PostForm() {
   const { values, onChange, onSubmit } = useForm(createPostCallback, {
     body: '',
   });
@@ -24,7 +24,6 @@ export default function PostForm(props) {
         },
       });
       values.body = '';
-      props.refetch();
     },
     onError(err) {
       return err;
