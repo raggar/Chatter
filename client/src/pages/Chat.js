@@ -7,7 +7,6 @@ import '../styles/Chat.css';
 import InfoBar from '../components/InfoBar';
 import Input from '../components/Input';
 import Messages from '../components/Messages';
-// import TextContainer from '../components/TextContainer';
 
 let socket;
 
@@ -50,6 +49,11 @@ const Chat = ({ location }) => {
     socket.on('roomData', ({ users }) => {
       setUsers(users);
     });
+
+    return () => {
+      socket.emit('close');
+      socket.off();
+    };
   }, [messages, users]);
 
   const sendMessage = (event) => {

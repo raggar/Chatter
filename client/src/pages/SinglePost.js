@@ -19,7 +19,6 @@ import MyPopup from '../util/MyPopup';
 
 function SinglePost(props) {
   const { postId } = props.match.params; // obtained from url (used to load this component)
-  console.log(postId);
   const { user } = useContext(AuthContext);
   const commentInputRef = useRef(null);
 
@@ -33,12 +32,14 @@ function SinglePost(props) {
   const [comment, setComment] = useState('');
 
   const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
-    update() {
+    onCompleted() {
       setComment(''); // clear comment box
       commentInputRef.current.blur(); // fix focus
     },
-    variables: postId,
-    body: comment,
+    variables: {
+      body: comment,
+      postId,
+    },
   });
 
   function deletePostCallback() {
@@ -114,10 +115,7 @@ function SinglePost(props) {
                         placeholder="Comment.."
                         name="comment"
                         value={comment}
-                        onChange={(event) => {
-                          setComment(event.target.value);
-                          console.log(event.target.value);
-                        }}
+                        onChange={(event) => setComment(event.target.value)}
                         ref={commentInputRef}
                       />
                       <button

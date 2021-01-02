@@ -5,8 +5,6 @@ import { Integrations } from '@sentry/tracing';
 import reportWebVitals from './reportWebVitals';
 import Provider from './ApolloProvider';
 
-console.log(process.env.REACT_APP_SENTRY_KEY);
-
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_KEY,
   autoSessionTracking: true,
