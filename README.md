@@ -11,8 +11,8 @@
 
 ## Features
 
-# User account registration
+### User account registration
 
-# Create, like and comment on posts
+### Create, like and comment on posts
 
-# Chat with other users in chat rooms
+### Chat with other users in chat rooms
