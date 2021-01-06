@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# Chatter
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Description
 
-## Available Scripts
+Chatter is a full-stack social media application designed to help people conenct and communicate online. Users are able to register for an account and can subsequently create individial posts that are displayed on the application's home screen in real-time. Those posts can then be liked and commented on by other Chatter users. The platforms also enables users to communicate in real-time through private chat rooms.
 
-In the project directory, you can run:
+## Features
 
-### `yarn start`
+- Account registration and authentication (JWT Tokens and Password Hashing)
+- Session and login state persistence (local storage)
+- Ability to add, delete and update both posts and comments
+- User live chat (Socket.io)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## How to run the application
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. Install Node.js from the https://nodejs.org/en/
+2. Clone the project by running `$git clone https://github.com/RahulAggarwal1016/Chatter.git`
+3. Cd and run the command `$npm i` in the backend folder to install all the required dependencies and packages (listed below)
+4. Run `$npm run dev` to initiate the backend server (should open at http:/localhost:4444)
+5. Cd and run the command `$npm i` in the frontend folder to install all the required dependencies and packages (listed below)
+6. Run `$npm run dev` to initiate the client side application (should open at http://localhost:7777)
+7. You're all done!
 
-### `yarn test`
+## Technologies and Services Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+React.js, Apollo-client, Nodemailer, Node.js, Express.js, Apollo-Server, GraphQL, MongoDB, Socket.io, Sentry
 
-### `yarn build`
+## External Packages - Frontend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- "@apollo/client": "^3.2.7",
+- "@sentry/browser": "^5.29.2",
+- "@sentry/react": "^5.29.2",
+- "@sentry/tracing": "^5.29.2",
+- "@testing-library/jest-dom": "^5.11.4",
+- "@testing-library/react": "^11.1.0",
+- "@testing-library/user-event": "^12.1.10",
+- "apollo-link-context": "^1.0.20",
+- "emailjs-com": "^2.6.4",
+- "graphql": "^15.4.0",
+- "graphql-tag": "^2.11.0",
+- "history": "^5.0.0",
+- "install": "^0.13.0",
+- "jwt-decode": "^3.1.2",
+- "moment": "^2.29.1",
+- "npm": "^6.14.9",
+- "query-string": "^6.13.7",
+- "react": "^17.0.1",
+- "react-dom": "^17.0.1",
+- "react-emoji": "^0.5.0",
+- "react-router-dom": "^5.2.0",
+- "react-scripts": "4.0.0",
+- "react-scroll-to-bottom": "^4.0.0",
+- "semantic-ui-css": "^2.4.1",
+- "semantic-ui-react": "^2.0.1",
+- "socket.io-client": "^3.0.4",
+- "web-vitals": "^0.2.4"
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## External Packages - Backend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- "apollo-server": "^2.19.0",
+- "apollo-server-express": "^2.19.1",
+- "bcryptjs": "^2.4.3",
+- "child_process": "^1.0.2",
+- "cors": "^2.8.5",
+- "dotenv": "^8.2.0",
+- "express": "^4.17.1",
+- "graphql": "^15.4.0",
+- "jsonwebtoken": "^8.5.1",
+- "mongoose": "^5.10.15",
+- "socket.io": "^3.0.4"
