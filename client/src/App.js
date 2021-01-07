@@ -15,6 +15,7 @@ import MenuBar from './components/MenuBar';
 import SinglePost from './pages/SinglePost';
 import Join from './pages/Join';
 import Chat from './pages/Chat';
+import Video from './pages/Video';
 
 const App = () => (
   <Router>
@@ -25,6 +26,7 @@ const App = () => (
       <AuthRoute exact path="/login" component={Login} />
       <AuthRoute exact path="/register" component={Register} />
     </Container>
+    <PrivateRoute exact path="/video" component={Video} />
     <PrivateRoute exact path="/join" component={Join} />
     <PrivateRoute exact path="/join/chat" component={Chat} />
   </Router>
