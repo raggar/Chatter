@@ -4,6 +4,8 @@
 
 Chatter is a full-stack social media application designed to help people conenct and communicate online. Users are able to register for an account and can subsequently create individial posts that are displayed on the application's home screen in real-time. Those posts can then be liked and commented on by other Chatter users. The platforms also enables users to communicate in real-time through private chat rooms.
 
+Demo: *Coming Soon!*
+
 ## Features 
 
 - Account registration and authentication (JWT Tokens and Password Hashing)
