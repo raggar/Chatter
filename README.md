@@ -1,28 +1,27 @@
-<<<<<<< HEAD
 # Chatter
 
 ## Project Description
 
 Chatter is a full-stack social media application designed to help people conenct and communicate online. Users are able to register for an account and can subsequently create individial posts that are displayed on the application's home screen in real-time. Those posts can then be liked and commented on by other Chatter users. The platforms also enables users to communicate in real-time through private chat rooms.
 
-## Features 
+## Features
 
 - Account registration and authentication (JWT Tokens and Password Hashing)
 - Session and login state persistence (local storage)
 - Ability to add, delete and update both posts and comments
-- User live chat (Socket.io) 
+- User live chat (Socket.io)
 
 ## How to run the application
 
 1. Install Node.js from the https://nodejs.org/en/
 2. Clone the project by running `$git clone https://github.com/RahulAggarwal1016/Chatter.git`
-3. Cd and run the command `$npm i` in the backend folder to install all the required dependencies and packages (listed below) 
+3. Cd and run the command `$npm i` in the backend folder to install all the required dependencies and packages (listed below)
 4. Run `$npm run dev` to initiate the backend server (should open at http:/localhost:4444)
-5. Cd and run the command `$npm i` in the frontend folder to install all the required dependencies and packages (listed below) 
+5. Cd and run the command `$npm i` in the frontend folder to install all the required dependencies and packages (listed below)
 6. Run `$npm run dev` to initiate the client side application (should open at http://localhost:7777)
 7. You're all done!
 
-## Technologies and Services Used 
+## Technologies and Services Used
 
 React.js, Apollo-client, Nodemailer, Node.js, Express.js, Apollo-Server, GraphQL, MongoDB, Socket.io, Sentry
 
@@ -69,6 +68,3 @@ React.js, Apollo-client, Nodemailer, Node.js, Express.js, Apollo-Server, GraphQL
 - "jsonwebtoken": "^8.5.1",
 - "mongoose": "^5.10.15",
 - "socket.io": "^3.0.4"
-=======
->>>>>>> 8866c4c150b55fe8e893efb8a2281e34a5a69a02
-
