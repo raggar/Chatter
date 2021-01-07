@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Chatter
 
 ## Project Description
@@ -68,4 +69,6 @@ React.js, Apollo-client, Nodemailer, Node.js, Express.js, Apollo-Server, GraphQL
 - "jsonwebtoken": "^8.5.1",
 - "mongoose": "^5.10.15",
 - "socket.io": "^3.0.4"
+=======
+>>>>>>> 8866c4c150b55fe8e893efb8a2281e34a5a69a02
 
