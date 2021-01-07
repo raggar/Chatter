@@ -165,10 +165,6 @@ const SUBMIT_COMMENT_MUTATION = gql`
       }
       commentCount
     }
-<<<<<<< HEAD
-   
-=======
->>>>>>> 656fa54a2701ab1adedbc91858bf9dac3a5da5cc
   }
 `;
 

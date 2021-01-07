@@ -15,6 +15,8 @@ import MenuBar from './components/MenuBar';
 import SinglePost from './pages/SinglePost';
 import Join from './pages/Join';
 import Chat from './pages/Chat';
+import News from './pages/news'; 
+import singleArticle from './pages/singleArticle'; 
 
 const App = () => (
   <Router>
@@ -22,6 +24,8 @@ const App = () => (
       <MenuBar />
       <Route exact path="/" component={Home} />
       <Route exact path="/posts/:postId" component={SinglePost} />
+      <Route exact path = "/news" component = {News}/>
+      <Route exact path = "/singleArticle" component = {singleArticle}/>
       <AuthRoute exact path="/login" component={Login} />
       <AuthRoute exact path="/register" component={Register} />
     </Container>
