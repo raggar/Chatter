@@ -27,7 +27,7 @@ function MenuBar() {
       <Menu.Menu position="right">
         <Menu.Item
           name="Live Chat"
-          active={activeItem === 'Live Chat'}
+          active={activeItem === 'Text Chat'}
           onClick={handleItemClick}
           as={Link}
           to="/join"
