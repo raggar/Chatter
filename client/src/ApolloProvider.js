@@ -16,7 +16,7 @@ function FallbackComponent() {
 }
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5000/graphql',
+  uri: 'https://server-chatter.herokuapp.com/graphql',
 });
 
 // used to add token to user's header
