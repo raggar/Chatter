@@ -2,7 +2,7 @@
 
 ## Project Description
 
-Chatter is a full-stack social media application designed to help people conenct and communicate online. Users are able to register for an account and can subsequently create individial posts that are displayed on the application's home screen in real-time. Those posts can then be liked and commented on by other Chatter users. The platforms also enables users to communicate in real-time through private chat rooms.
+Chatter is a full-stack social media application designed to help people connect and communicate online. Users are able to register for an account and can subsequently create individual posts that are displayed on the application's home screen in real-time. Those posts can then be liked and commented on by other Chatter users. The platforms also enables users to communicate in real-time through private chat rooms.
 
 ## Features
 
@@ -10,6 +10,7 @@ Chatter is a full-stack social media application designed to help people conenct
 - Session and login state persistence (local storage)
 - Ability to add, delete and update both posts and comments
 - User live chat (Socket.io)
+- User video chat (Twilio API)
 
 ## How to run the application
 
@@ -23,7 +24,7 @@ Chatter is a full-stack social media application designed to help people conenct
 
 ## Technologies and Services Used
 
-React.js, Apollo-client, Nodemailer, Node.js, Express.js, Apollo-Server, GraphQL, MongoDB, Socket.io, Sentry
+React.js, Apollo-client, Nodemailer, Node.js, Express.js, Apollo-Server, GraphQL, MongoDB, Socket.io, Sentry, Twilio
 
 ## External Packages - Frontend
 
@@ -60,11 +61,18 @@ React.js, Apollo-client, Nodemailer, Node.js, Express.js, Apollo-Server, GraphQL
 - "apollo-server": "^2.19.0",
 - "apollo-server-express": "^2.19.1",
 - "bcryptjs": "^2.4.3",
+- "body-parser": "^1.19.0",
 - "child_process": "^1.0.2",
 - "cors": "^2.8.5",
 - "dotenv": "^8.2.0",
 - "express": "^4.17.1",
+- "express-pino-logger": "^5.0.0",
 - "graphql": "^15.4.0",
 - "jsonwebtoken": "^8.5.1",
 - "mongoose": "^5.10.15",
-- "socket.io": "^3.0.4"
+- "node-env-run": "^4.0.2",
+- "nodemon": "^2.0.7",
+- "npm-run-all": "^4.1.5",
+- "pino-colada": "^2.1.0",
+- "socket.io": "^3.0.4",
+- "twilio": "^3.54.1"
