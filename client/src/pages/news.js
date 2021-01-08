@@ -1,15 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import {
-  Grid,
-  Transition,
-  Button,
-  TextArea,
-  FormTextArea,
-  Card,
-  Label,
-} from 'semantic-ui-react';
-import PostCard from '../components/PostCard';
-import PostForm from '../components/PostForm';
+import React, { useEffect, useState } from 'react';
+import { Card, Grid, GridRow } from 'semantic-ui-react';
 
 function news() {
   const [items, setItems] = useState([]);
@@ -21,38 +11,27 @@ function news() {
       .then((json) => {
         console.log(JSON.stringify(json));
         setItems(json.articles);
+        console.log('items', items);
       })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        // this.setState({ isLoading: false });
-      });
+      .catch((error) => console.error(error));
   }, []);
 
+  console.log(items);
+
   return (
-    <ul>
-      {items.map((item) => (
-        <Card>
-          <Label>{item.name}</Label>
-          <Label>{item.title}</Label>
-          <Label>{item.description}</Label>
-        </Card>
-      ))}
-    </ul>
+    <Grid columns={3}>
+      <GridRow centered>
+        {items.map((item) => (
+          <Card
+            href={item.url}
+            header={item.title}
+            description={item.description}
+            meta={item.author}
+          />
+        ))}
+      </GridRow>
+    </Grid>
   );
 }
 
 export default news;
-const styles2 = {
-  baseText: {
-    fontFamily: 'Cochin',
-  },
-  titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  image: {
-    width: 50,
-    height: 50,
-  },
-  cases: {},
-};

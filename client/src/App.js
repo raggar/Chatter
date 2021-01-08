@@ -16,7 +16,6 @@ import SinglePost from './pages/SinglePost';
 import Join from './pages/Join';
 import Chat from './pages/Chat';
 import News from './pages/news';
-import singleArticle from './pages/singleArticle';
 import Video from './pages/Video';
 
 const App = () => (
@@ -26,11 +25,10 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route exact path="/posts/:postId" component={SinglePost} />
       <Route exact path="/news" component={News} />
-      <Route exact path="/singleArticle" component={singleArticle} />
       <AuthRoute exact path="/login" component={Login} />
       <AuthRoute exact path="/register" component={Register} />
+      <PrivateRoute exact path="/video" component={Video} />
     </Container>
-    <PrivateRoute exact path="/video" component={Video} />
     <PrivateRoute exact path="/join" component={Join} />
     <PrivateRoute exact path="/join/chat" component={Chat} />
   </Router>
