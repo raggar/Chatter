@@ -4,7 +4,7 @@ import VideoChat from '../components/VideoChat';
 import '../styles/Video.css';
 
 const Video = () => (
-  <div className="app">
+  <div id="video">
     <header>
       <h1>Video Chat</h1>
     </header>

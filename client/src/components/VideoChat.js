@@ -18,17 +18,20 @@ const VideoChat = () => {
   const handleSubmit = useCallback(
     async (event) => {
       event.preventDefault();
-      const data = await fetch('http://localhost:5000/video/token', {
-        method: 'POST',
-        body: JSON.stringify({
-          identity: username,
-          room: roomName,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      })
+      const data = await fetch(
+        'https://server-chatter.herokuapp.com/video/token',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            identity: username,
+            room: roomName,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+        }
+      )
         .then((res) => res.json())
         .catch((err) => console.log(err.message));
       setToken(data.token);
