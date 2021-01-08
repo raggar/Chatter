@@ -8,14 +8,21 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
+const bodyParser = require('body-parser');
+const pino = require('express-pino-logger')();
 const resolvers = require('./graphql/resolvers'); // contain logic for each query/mutation (don't need to specify /index at the end since its default file)
 const typeDefs = require('./graphql/typeDefs'); // where each query/mutation is defined
-const router = require('./router');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
+
+// videochat imports
+const config = require('./config');
+const { videoToken } = require('./tokens');
 
 const app = express();
 app.use(cors());
-app.use('/join', router);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(pino);
 
 const httpServer = http.createServer(app);
 const io = socketio(httpServer, {
@@ -82,6 +89,35 @@ io.on('connect', (socket) => {
       });
     }
   });
+});
+
+const sendTokenResponse = (token, res) => {
+  res.set('Content-Type', 'application/json');
+  res.send(
+    JSON.stringify({
+      token: token.toJwt(),
+    })
+  );
+};
+
+app.get('/api/greeting', (req, res) => {
+  const name = req.query.name || 'World';
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
+});
+
+app.get('/video/token', (req, res) => {
+  const { identity } = req.query;
+  const { room } = req.query;
+  const token = videoToken(identity, room, config);
+  sendTokenResponse(token, res);
+});
+
+app.post('/video/token', (req, res) => {
+  const { identity } = req.body;
+  const { room } = req.body;
+  const token = videoToken(identity, room, config);
+  sendTokenResponse(token, res);
 });
 
 const PORT = process.env.port || 5000;
