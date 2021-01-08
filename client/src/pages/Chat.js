@@ -17,7 +17,7 @@ const Chat = ({ location }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
-  const ENDPOINT = 'https://client-chatter.herokuapp.com';
+  const ENDPOINT = 'https://server-chatter.herokuapp.com';
 
   useEffect(() => {
     // get room and name from params

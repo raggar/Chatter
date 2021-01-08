@@ -27,17 +27,10 @@ function MenuBar() {
       <Menu.Menu position="right">
         <Menu.Item
           name="Live Chat"
-          active={activeItem === 'Text Chat'}
+          active={activeItem === 'Live Chat'}
           onClick={handleItemClick}
           as={Link}
           to="/join"
-        />
-        <Menu.Item
-          name="Video Chat"
-          active={activeItem === 'Video Chat'}
-          onClick={handleItemClick}
-          as={Link}
-          to="/video"
         />
         <Menu.Item name="logout" onClick={logout} as={Link} to="/login" />
       </Menu.Menu>
