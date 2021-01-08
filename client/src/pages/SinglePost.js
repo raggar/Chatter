@@ -157,7 +157,7 @@ const SUBMIT_COMMENT_MUTATION = gql`
     createComment(postId: $postId, body: $body) {
       body
       username
-      comments{
+      comments {
         id
         body
         createdAt
