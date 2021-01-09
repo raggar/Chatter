@@ -15,7 +15,7 @@ import MenuBar from './components/MenuBar';
 import SinglePost from './pages/SinglePost';
 import Join from './pages/Join';
 import Chat from './pages/Chat';
-import News from './pages/news';
+import News from './pages/News';
 import Video from './pages/Video';
 
 const App = () => (
