@@ -74,7 +74,6 @@ const Chat = ({ location }) => {
           setMessage={setMessage}
           sendMessage={sendMessage}
         />
-        {/* <TextContainer users={users} /> */}
       </div>
     </div>
   );
