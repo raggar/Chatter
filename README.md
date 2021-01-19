@@ -2,7 +2,7 @@
 
 ## Project Description
 
-Chatter is a full-stack social media application designed to help people connect and communicate online. Users are able to register for an account and can subsequently create individual posts that are displayed on the application's home screen in real-time. Those posts can then be liked and commented on by other Chatter users. The platforms also enables users to communicate in real-time through private chat rooms.
+Chatter is a full-stack social media application that helps people connect and communicate online. Users are able to register for an account and can subsequently create individual posts that are displayed on the application's home screen in real-time. Those posts can then be liked and commented on by other Chatter users. The platform also enables registrants to communicate in real-time through private chat rooms.
 
 Demo Link: https://client-chatter.herokuapp.com/
 
